@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.ManyToAny;
+
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,11 +25,11 @@ public class Cliente {
     @Column(name = "cliente_matricula")
     private String matricula;
 
-    @ManyToAny(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "compra",
         joinColumns = { @JoinColumn(name = "cliente_id")},
         inverseJoinColumns = { @JoinColumn(name = "produto_id")}
-        )
+        ) 
     private Set<Produto> produtos;
 
     // GET & SET ID:

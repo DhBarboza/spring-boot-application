@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
+import java.util.Set;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "produto")
@@ -20,6 +23,9 @@ public class Produto {
 
     @Column(name = "produto_preco")
     private Float preco;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "produtos")
+    private Set<Cliente> clientes;
 
     // GET & SET ID:
     public Long getId(){
@@ -43,5 +49,13 @@ public class Produto {
     }
     public void setPreco(Float preco) {
         this.preco = preco;
+    }
+
+    // GET & SET:
+    public Set<Cliente> getClientes(){
+        return this.clientes;
+    }
+    public void setClientes(Set<Cliente> clientes){
+        this.clientes = clientes;
     }
 }

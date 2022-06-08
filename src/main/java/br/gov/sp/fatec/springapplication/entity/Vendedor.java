@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.util.Set;
+
+import javax.persistence.*;
+
 @Entity
 @Table(name = "vendedor")
 public class Vendedor {
@@ -20,6 +24,14 @@ public class Vendedor {
 
     @Column(name = "vendedor_matricula")
     private String matricula;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "compra",
+        joinColumns = { @JoinColumn(name = "vendedor_id")},
+        inverseJoinColumns = { @JoinColumn(name = "produto_id")}
+        )
+        
+    private Set<Produto> produtos;
 
     // GET & SET ID:
     public Long getId(){
@@ -43,5 +55,13 @@ public class Vendedor {
     }
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+     // GET & SET PRODUTOS
+     public Set<Produto> getProdutos(){
+        return this.produtos;
+    }
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

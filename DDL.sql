@@ -39,3 +39,9 @@ create table compra (
   foreign key compra_cliente_fk (cliente_id) references cliente (cliente_id),
   foreign key compra_vendedor_fk (vendedor_id) references vendedor (vendedor_id)
 );
+
+insert into vendedor(vendedor_nome, vendedor_matricula) values('Astoufo', '05_06@2022');
+insert into cliente(cliente_nome, cliente_matricula) values('Manarildo', '06_06@2022');
+insert into produto(produto_nome, produto_preco) values('iPhone', 2700.00);
+insert into compra(1,1,1);
+

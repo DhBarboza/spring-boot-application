@@ -2,6 +2,8 @@ package br.gov.sp.fatec.springapplication;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+
 //import java.beans.Transient;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import br.gov.sp.fatec.springapplication.entity.Vendedor;
 import br.gov.sp.fatec.springapplication.repository.VendedorRepository;
 import br.gov.sp.fatec.springapplication.entity.Cliente;
+import br.gov.sp.fatec.springapplication.entity.Produto;
 import br.gov.sp.fatec.springapplication.repository.ClienteRepository;
+import br.gov.sp.fatec.springapplication.repository.ProdutoRepository;
 
 @SpringBootTest
 @Transactional
@@ -26,6 +30,9 @@ class ApplicationTests {
 	
 	@Autowired
 	private ClienteRepository clienteRepo;
+	
+	@Autowired
+	private ProdutoRepository produtoRepo;
 
 	@Test
 	void contextLoads() {
@@ -36,8 +43,14 @@ class ApplicationTests {
 		Vendedor vendedor = new Vendedor();
 		vendedor.setNome("Astoufo");
 		vendedor.setMatricula("05_06@2022");
+		vendedor.setProdutos(new HashSet<Produto>());
+		Produto produto = new Produto();
+		produto.setId(1L);
+		produto.setNome("iPhone");
+		produtoRepo.save(produto);
+		vendedor.getProdutos().add(produto);
 		vendedorRepo.save(vendedor);
-		assertNotNull(vendedor.getId());
+		assertNotNull(vendedor.getProdutos().iterator().next().getId());
 	}
 
 	@Test
@@ -50,9 +63,14 @@ class ApplicationTests {
 	}
 
 	@Test
-	void testClienteCompra() {
-		Cliente cliente = new clienteRepo.findById(1L).get();
-		assertNotNull(cliente.getId());
+	void testVendedorCompra() {
+		Vendedor vendedor = vendedorRepo.findById(1L).get();
+		assertEquals("Astoufo", vendedor.getProdutos().iterator().next().getNome());
 	}
-
+	
+	@Test
+	void testProduto() {
+		Produto produto = produtoRepo.findById(1L).get();
+		assertEquals("Astoufo", produto.getClientes().iterator().next().getNome());
+	}
 }
