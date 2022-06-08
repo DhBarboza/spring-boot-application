@@ -45,7 +45,6 @@ class ApplicationTests {
 		vendedor.setMatricula("05_06@2022");
 		vendedor.setProdutos(new HashSet<Produto>());
 		Produto produto = new Produto();
-		produto.setId(1L);
 		produto.setNome("iPhone");
 		produtoRepo.save(produto);
 		vendedor.getProdutos().add(produto);
