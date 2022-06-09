@@ -72,4 +72,16 @@ class ApplicationTests {
 		Produto produto = produtoRepo.findById(1L).get();
 		assertEquals("Astoufo", produto.getClientes().iterator().next().getNome());
 	}
+
+	@Test
+	void testSelectVendedorNomeContains() {
+		List<Vendedor> vendedores = vendedorRepo.findByNomeContainsIgnoreCase("oufo")
+		assertFalse(vendedores.isEmpyt());
+	}
+
+	@Test
+	void testSelectVendedorNome() {
+		Vendedor vendedor = vendedorRepo.findByNome("Astoufo")
+		assertNotNull(vendedor);
+	}
 }
